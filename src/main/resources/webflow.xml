@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/webflow-config
+           http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.4.xsd">
+
+	<!-- Executes flows: the entry point into the Spring Web Flow system -->
+	<!-- <webflow:flow-executor id="flowExecutor"> <webflow:flow-execution-listeners> 
+		<webflow:listener ref="securityFlowExecutionListener" /> </webflow:flow-execution-listeners> 
+		</webflow:flow-executor> -->
+
+	<webflow:flow-executor id="flowExecutor" />
+
+	<!-- The registry of executable flow definitions -->
+	<!-- <webflow:flow-registry id="flowRegistry" flow-builder-services="flowBuilderServices" 
+		base-path="/WEB-INF/flows"> <webflow:flow-location-pattern value="/**/flow.xml" 
+		/> </webflow:flow-registry> -->
+
+	<webflow:flow-registry id="flowRegistry" flow-builder-services="flowBuilderServices">
+		<webflow:flow-location path="/WEB-INF/flows/shopping.xml"
+			id="shopping" />
+		<webflow:flow-location path="/WEB-INF/flows/addToCart.xml"
+			id="addToCart" />
+	</webflow:flow-registry>
+
+	<!-- Plugs in a custom creator for Web Flow views -->
+	<!-- <webflow:flow-builder-services id="flowBuilderServices" view-factory-creator="mvcViewFactoryCreator" 
+		development="true" validator="validator" /> -->
+
+	<webflow:flow-builder-services id="flowBuilderServices"
+		view-factory-creator="mvcViewFactoryCreator" development="true" />
+
+	<!-- Configures Web Flow to use Tiles to create views for rendering; Tiles 
+		allows for applying consistent layouts to your views -->
+	<bean id="mvcViewFactoryCreator"
+		class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
+		<property name="viewResolvers" ref="defaultViewResolver" />
+		<property name="useSpringBeanBinding" value="true" />
+	</bean>
+
+	<!-- Bootstraps JSR-303 validation and exposes it through Spring's Validator 
+		interface -->
+	<!-- <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/> -->
+
+	<!-- Installs a listener to apply Spring Security authorities -->
+	<!-- <bean id="securityFlowExecutionListener" class="org.springframework.webflow.security.SecurityFlowExecutionListener" 
+		/> -->
+
+
+	<!-- ViewResolver -->
+	<bean id="defaultViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+
+	<!-- 如何根据http请求选择合适的controller是MVC中一项十分关键的功能，在Spring MVC中，HandlerMapping接口是这一活动的抽象 -->
+	<!-- SimpleUrlHandlerMapping 通过配置文件，把一个URL映射到Controller -->
+	<!-- /shopping.do 请求由 flowController 来处理 -->
+	<!-- 不管设成 /shopping.do 还是设成 /shopping ，或者 /shopping.htm ，效果都是一样的， flowController 
+		都会去找 id 为 shopping的flow来执行 -->
+	<!-- UrlFilenameViewController 会将 "/index" 这样的请求映射成名为 "index" 的视图 -->
+	
+	<!-- 我们只要明白 FlowController 可根据客户端请求的结尾部分，找出相应的 flow 来执行。配置 FlowController只需指定FlowExecutor即可 -->
+	
+	<!-- <bean id="viewMappings" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"> 
+		<property name="mappings"> <value> /shopping.do=flowController </value> </property> 
+		<property name="defaultHandler"> <bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" 
+		/> </property> </bean>
+	
+	
+	<bean id="flowController" class="org.springframework.webflow.mvc.servlet.FlowController"> 
+		<property name="flowExecutor" ref="flowExecutor" /> </bean> -->
+
+</beans>
