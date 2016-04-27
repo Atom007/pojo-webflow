@@ -8,6 +8,8 @@
 </head>
 <body>
 	<h1>View Cart</h1>
-	<a href="${flowExecutionUrl}&_eventId=submit">Submit</a>
+	<input name="hotelId" type="hidden" value = "123" />
+	<input name="currentUser.name" type="hidden" value = "test" />
+	<a href="${flowExecutionUrl}&_eventId=submit&hotelId=111">Submit</a>
 </body>
 </html>

@@ -9,12 +9,13 @@
 	<!-- Map paths directly to view names without controller processing. Use 
 		the view-name attribute if necessary: by convention the view name equals 
 		the path without the leading slash -->
-	<mvc:view-controller path="/" view-name="home" />
+	<mvc:view-controller path="/" view-name="/index" />
 	<!-- 
 	<mvc:view-controller path="/embeddedFlowContainer" />
 	<mvc:view-controller path="/embeddedFlowInModalDialogContainer" />
 	 -->
-
-	<context:component-scan base-package="org.springframework.samples.webflow" />
+	<!-- <mvc:view-controller path="/index" view-name="/index" /> -->
+	
+	<context:component-scan base-package="cn.atom.webflow" />
 
 </beans>

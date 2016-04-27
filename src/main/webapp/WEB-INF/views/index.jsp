@@ -9,6 +9,7 @@
 <body>
 	<h1>Hello!</h1>
 	<br />
-	<a href="shopping.do">View Cart</a>
+	<input name="hotel" type="hidden" value = "${hotel.id}" />
+	<a href="shopping?hotelId=111">View Cart</a>
 </body>
 </html>

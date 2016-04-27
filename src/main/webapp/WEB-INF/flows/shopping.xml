@@ -3,9 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
  http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
- <!-- view-state中的view对应jsp文件夹中的jsp页面，on是触发事件，to对应state id -->
-	<!-- 流程文件-2015年6月14日15:51:56 -->
-	<!-- 根据排在第一位的顺序来执行 -->
+
+
+	<input name="hotelId" type="long" value="flowScope.hotelId" />
+	<on-start>
+		<evaluate expression="bookingService.findHotel(hotelId)"
+			result="flowScope.hotel" />
+	</on-start>
+
 	<view-state id="viewCart" view="viewCart">
 		<transition on="submit" to="viewOrder">
 		</transition>
@@ -17,7 +22,12 @@
 	<view-state id="orderConfirmed" view="orderConfirmed">
 		<transition on="returnToIndex" to="returnToIndex">
 		</transition>
+		<transition on="returnToTest" to="returnToTest">
+		</transition>
 	</view-state>
-	<end-state id="returnToIndex" view="externalRedirect:servletRelative:/index.jsp">
+	<end-state id="returnToIndex" view="externalRedirect:servletRelative:/index">
+	</end-state>
+	<end-state id="returnToTest">
+		<output name="hotel" value="flowScope.hotel" />
 	</end-state>
 </flow>
